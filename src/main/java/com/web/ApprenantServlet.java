@@ -1,4 +1,4 @@
-package com.apprenant.web;
+package com.web;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.apprenant.dao.ApprenantDAO;
-import com.apprenant.model.ApprenantModel;
+import com.dao.ApprenantDAO;
+import com.model.ApprenantModel;
 
 /**
  * ApprenantServlet.java

@@ -76,7 +76,7 @@
                   </li>
                   <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/list">Apprenants</a>
                   </li>
-                  <li class="rd-nav-item"><a class="rd-nav-link" href="typography.html">Typography</a>
+                  <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/salles/list-salle">Salles</a>
                   </li>
                   <li class="rd-nav-item"><a class="rd-nav-link" href="contact-us.html">Contact us</a>
                   </li>

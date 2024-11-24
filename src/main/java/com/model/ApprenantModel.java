@@ -1,4 +1,4 @@
-package com.apprenant.model;
+package com.model;
 
 /**
  * ApprenantModel.java
