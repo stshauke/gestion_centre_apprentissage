@@ -102,7 +102,8 @@ public class CoursServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        int idCours = Integer.parseInt(request.getParameter("idCours"));
+        
+    	int idCours = Integer.parseInt(request.getParameter("idCours"));
         CoursModel existingCours = coursDAO.selectCours(idCours);
         request.setAttribute("cours", existingCours);
 
@@ -112,16 +113,15 @@ public class CoursServlet extends HttpServlet {
 
     private void insertCours(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        String nomCours = request.getParameter("nomCours");
-        String langueDispensee = request.getParameter("langueDispensee");
-        
-        String descriptionCours = request.getParameter("descriptionCours");      
-        String typeCours = request.getParameter("typeCours");
-        
+       
+    	String nomCours = request.getParameter("nomCours");
+        String langueDispensee = request.getParameter("langueDispensee");       
+        String descriptionsCours = request.getParameter("descriptionsCours");      
+        String typeCours = request.getParameter("typeCours");       
         int idSalle = Integer.parseInt(request.getParameter("idSalle"));
-       float tarifCours =Float.parseFloat(request.getParameter("tarifCours"));
+        float tarifCours =Float.parseFloat(request.getParameter("tarifCours"));
         
-        CoursModel newCours = new CoursModel(nomCours, langueDispensee, descriptionCours,typeCours,idSalle, tarifCours);
+        CoursModel newCours = new CoursModel(nomCours, langueDispensee, descriptionsCours,typeCours,idSalle, tarifCours);
         coursDAO.insertCours(newCours);
 
         response.sendRedirect("list-cours");
@@ -129,17 +129,16 @@ public class CoursServlet extends HttpServlet {
 
     private void updateCours(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int idCours = Integer.parseInt(request.getParameter("idCours"));
+        
+    	int idCours = Integer.parseInt(request.getParameter("idCours"));
         String nomCours = request.getParameter("nomCours");
-        String langueDispensee = request.getParameter("langueDispensee");
-        
-        String descriptionCours = request.getParameter("descriptionCours");      
-        String typeCours = request.getParameter("typeCours");
-        
+        String langueDispensee = request.getParameter("langueDispensee");        
+        String descriptionsCours = request.getParameter("descriptionsCours");      
+        String typeCours = request.getParameter("typeCours");      
         int idSalle = Integer.parseInt(request.getParameter("idSalle"));
-       float tarifCours =Float.parseFloat(request.getParameter("tarifCours"));
+        float tarifCours =Float.parseFloat(request.getParameter("tarifCours"));
 
-        CoursModel updatedCours = new CoursModel(idCours, nomCours, langueDispensee, descriptionCours,typeCours,idSalle, tarifCours);
+        CoursModel updatedCours = new CoursModel(idCours, nomCours, langueDispensee, descriptionsCours,typeCours,idSalle, tarifCours);
         coursDAO.updateCours(updatedCours);
 
         response.sendRedirect("list-cours");

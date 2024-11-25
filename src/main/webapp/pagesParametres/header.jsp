@@ -72,12 +72,10 @@
               <div class="rd-navbar-nav-wrap">
                 <!-- RD Navbar Nav-->
                 <ul class="rd-navbar-nav">
-                  <li class="rd-nav-item active"><a class="rd-nav-link" href="index.html">Home</a>
-                  </li>
-                  <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/list">Apprenants</a>
-                  </li>
-                  <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/salles/list-salle">Salles</a>
-                  </li>
+                  <li class="rd-nav-item active"><a class="rd-nav-link" href="index.html">Home</a></li>
+                  <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/list">Apprenants</a></li>
+                   <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/cours/list-cours">Cours</a></li> 
+                  <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/salles/list-salle">Salles</a></li>
                   <li class="rd-nav-item"><a class="rd-nav-link" href="contact-us.html">Contact us</a>
                   </li>
                 </ul>
