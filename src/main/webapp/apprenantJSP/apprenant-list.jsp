@@ -18,6 +18,7 @@
                <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Apprenants</a></li>
             <li><a href="<%=request.getContextPath()%>/cours/list-cours" class="nav-link">Cours</a></li>
             <li><a href="<%=request.getContextPath()%>/salles/list-salle" class="nav-link">Salles</a></li>
+            <li><a href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
             </ul>
         </nav>
     </header>
