@@ -12,7 +12,8 @@
             <li><a href="<%=request.getContextPath()%>/cours/list-cours" class="nav-link">Cours</a></li>
             <li><a href="<%=request.getContextPath()%>/salles/list-salle" class="nav-link">Salles</a></li>
             <li><a href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
-                        <li><a href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>
+            <li><a href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>
+            
             
         </ul>
     </nav>
@@ -21,42 +22,38 @@
 
 <div class="row">
     <div class="container">
-        <h3 class="text-center">Liste des Cours</h3>
+        <h3 class="text-center">Liste des messages</h3>
         <hr>
         <div class="container text-left">
-            <a href="<%=request.getContextPath()%>/cours/new" class="btn btn-success">Ajouter un cours</a>
+            <a href="<%=request.getContextPath()%>/message/new" class="btn btn-success">Ajouter un message</a>
         </div>
         <br>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nom du Cours</th>
-                    <th>Langue</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                    <th>Salle</th>
-                    <th>Tarif</th>
-                    <th>Actions</th>
+                    <th>Id apprenant</th>
+                    <th>Contenu</th>
+                    <th>langue_cible</th>
+                    <th>datePublication</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="cours" items="${listCours}">
+                <c:forEach var="message" items="${listMessage}">
                     <tr>
-                        <td><c:out value="${cours.idCours}" /></td>
-                        <td><c:out value="${cours.nomCours}" /></td>
-                        <td><c:out value="${cours.langueDispensee}" /></td>
-                        <td><c:out value="${cours.descriptionsCours}" /></td>
-                        <td><c:out value="${cours.typeCours}" /></td>
-                        <td><c:out value="${cours.idSalle}" /></td>
-                        <td><c:out value="${cours.tarifCours}" /></td>
+                        <td><c:out value="${message.idMessage}" /></td>
+                        <td><c:out value="${message.idApprenant}" /></td>
+                        <td><c:out value="${message.contenu}" /></td>
+                        <td><c:out value="${message.langueCible}" /></td>
+                        <td><c:out value="${message.datePublication}" /></td>
+                       
                         <td>
-                            <a href="<%=request.getContextPath()%>/cours/edit?idCours=<c:out value='${cours.idCours}' />" class="btn btn-sm btn-warning">
+                            <a href="<%=request.getContextPath()%>/message/edit?idMessage=<c:out value='${message.idMessage}' />" class="btn btn-sm btn-warning">
                                 <i class="bi bi-pencil-fill"></i> Modifier
                             </a>
                             &nbsp;
-                            <a href="<%=request.getContextPath()%>/cours/delete?idCours=<c:out value='${cours.idCours}' />" class="btn btn-sm btn-danger"
-                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?')">
+                            <a href="<%=request.getContextPath()%>/message/delete?idMessage=<c:out value='${message.idMessage}' />" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?')">
                                 <i class="bi bi-trash"></i> Supprimer
                             </a>
                         </td>

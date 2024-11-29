@@ -77,6 +77,7 @@
                    <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/cours/list-cours">Cours</a></li> 
                   <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/salles/list-salle">Salles</a></li>
                   <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/abonnements/list-abonnements">Abonnement</a></li>
+                  <li class="rd-nav-item"><a class="rd-nav-link" href="${pageContext.request.contextPath}/message/list-message">Message</a></li>
 
                 </ul>
               </div>
