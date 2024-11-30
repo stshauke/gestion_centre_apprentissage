@@ -114,10 +114,10 @@ public class MessageServlet extends HttpServlet {
     private void insertMessage(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {    	
     	
-    	int idApprenant = Integer.parseInt(request.getParameter("id_apprenant"));
+    	int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
         String contenu = request.getParameter("contenu");
-        String langueCible = request.getParameter("langue_cible");
-        String datePublication =request.getParameter("date_publication");
+        String langueCible = request.getParameter("langueCible");
+        String datePublication =request.getParameter("datePublication");
         
         MessageModel newMessage = new MessageModel( idApprenant, contenu, langueCible, datePublication);
         messageDAO.insertMessage(newMessage);
@@ -129,10 +129,10 @@ public class MessageServlet extends HttpServlet {
             throws SQLException, IOException {
         
     	int idMessage = Integer.parseInt(request.getParameter("idMessage"));
-    	int idApprenant = Integer.parseInt(request.getParameter("id_apprenant"));
+    	int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
     	 String contenu = request.getParameter("contenu");
-         String langueCible = request.getParameter("langue_cible");
-         String datePublication =request.getParameter("date_publication");
+         String langueCible = request.getParameter("langueCible");
+         String datePublication =request.getParameter("datePublication");
 
         MessageModel updatedMessage = new MessageModel(idMessage, idApprenant, contenu, langueCible, datePublication);
         messageDAO.updateMessage(updatedMessage);

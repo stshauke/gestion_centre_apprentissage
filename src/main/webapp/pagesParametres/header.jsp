@@ -63,8 +63,8 @@
                   <button class="rd-navbar-aside-toggle" data-multitoggle="#rd-navbar-aside" aria-label="Aside Toggle"><span></span></button>
                   <div class="rd-navbar-aside" id="rd-navbar-aside">
                     <ul class="rd-navbar-aside-list">
-                      <li><span class="icon mdi mdi-map-marker"></span><a href="#">9 Valley St. Brooklyn, NY 11203</a></li>
-                      <li><span class="icon mdi mdi-phone"></span><a href="tel:#">1-800-346-6277</a></li>
+                      <li><span class="icon mdi mdi-map-marker"></span><a href="#">2 rue de l'aqueduc, 93100 Montreuil, France</a></li>
+                      <li><span class="icon mdi mdi-phone"></span><a href="tel:#">+33 7 49 98 67 96</a></li>
                     </ul>
                   </div>
                 </div>

@@ -8,7 +8,7 @@
             <div class="footer-classic-layout justify-content-sm-around justify-content-md-between">
               <div class="footer-classic-layout-item"><a class="brand" href="index.html"><img class="brand-logo-dark" src="${pageContext.request.contextPath}/assets/images/logo-default-195x39.png" alt="" width="195" height="39"/><img class="brand-logo-light" src="${pageContext.request.contextPath}/assets/images/logo-inverse-195x39.png" alt="" width="195" height="39"/></a>
                 <div class="footer-classic-item-block footer-classic-item-block-1">
-                  <h6>10000+ Satisfied Students</h6>
+                  <h6>Plus de 10 000 étudiants satisfaits</h6>
                   <div class="owl-carousel-quote-light">
                     <!-- Owl Carousel-->
                     <div class="owl-carousel" data-items="1" data-dots="false" data-nav="false" data-stage-padding="0" data-loop="true" data-margin="30" data-nav-custom="#footer-owl-nav" data-animation-in="fadeIn" data-animation-out="fadeOut" data-mouse-drag="false">
@@ -16,27 +16,27 @@
                         <div class="icon linearicons-quote-open text-primary icon-md"></div>
                         <div class="quote-light-main">
                           <div class="quote-light-text">
-                            <q>The staff here is really supportive, teachers are great, the school has a good structure. Thank you!</q>
+                            <q>Le personnel ici est vraiment très serviable, les professeurs sont super, l'école a une bonne structure. Merci !</q>
                           </div>
-                          <cite class="quote-light-cite">Jane Smith</cite>
+                          <cite class="quote-light-cite">Salomon TSHAUKE</cite>
                         </div>
                       </blockquote>
                       <blockquote class="quote-light quote-light-sm">
                         <div class="icon linearicons-quote-open text-primary icon-md"></div>
                         <div class="quote-light-main">
                           <div class="quote-light-text">
-                            <q>I am really enjoying my experience here. Teachers are very friendly and there is a friendly atmosphere.</q>
+                            <q>J'apprécie vraiment mon expérience ici. Les professeurs sont très sympathiques et il y a une ambiance conviviale.</q>
                           </div>
-                          <cite class="quote-light-cite">Peter McMillan</cite>
+                          <cite class="quote-light-cite">Snekha HARIKRISHNAN</cite>
                         </div>
                       </blockquote>
                       <blockquote class="quote-light quote-light-sm">
                         <div class="icon linearicons-quote-open text-primary icon-md"></div>
                         <div class="quote-light-main">
                           <div class="quote-light-text">
-                            <q>I like that it has a busy atmosphere but itâs never stressful. Everyone is very nice and you can ask anything at any time.</q>
+                            <q>J'aime le fait qu'il y ait une atmosphère animée mais ce n'est jamais stressant. Tout le monde est très gentil et vous pouvez demander n'importe quoi à tout moment.</q>
                           </div>
-                          <cite class="quote-light-cite">Kate Wilson</cite>
+                          <cite class="quote-light-cite">Lee-seing-darino HERINJANAHARY</cite>
                         </div>
                       </blockquote>
                     </div>
