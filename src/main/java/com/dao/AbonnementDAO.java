@@ -20,7 +20,8 @@ public class AbonnementDAO {
     private static final String SELECT_ALL_ABONNEMENTS = "SELECT * FROM abonnements";
     private static final String DELETE_ABONNEMENT_SQL = "DELETE FROM abonnements WHERE id_abonnement = ?;";
     private static final String UPDATE_ABONNEMENT_SQL = "UPDATE abonnements SET id_apprenant = ?, date_debut = ?, date_fin = ? WHERE id_abonnement = ?;";
-
+    private static final String SELECT_NOM_APPRENANT_BY_ID = "SELECT nom FROM apprenant WHERE id_apprenant = ?";
+    
     public AbonnementDAO() {
         // Configuration avancée possible (DataSource, etc.)
     }
@@ -141,5 +142,23 @@ public class AbonnementDAO {
                 }
             }
         }
+    }
+
+/**
+ * Récupérer le nom d'un apprenant par son ID.
+ */
+    public String getNomApprenantById(int idApprenant) {
+        String nomApprenant = null;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_NOM_APPRENANT_BY_ID)) {
+            preparedStatement.setInt(1, idApprenant);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                nomApprenant = rs.getString("nom");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nomApprenant != null ? nomApprenant : "Inconnu"; // Retourne "Inconnu" si l'apprenant n'est pas trouvé
     }
 }

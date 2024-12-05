@@ -38,25 +38,28 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="abonnements" items="${listAbonnements}">
-                    <tr>
-                        <td><c:out value="${abonnements.idAbonnement}" /></td>
-                        <td><c:out value="${abonnements.idApprenant}" /></td>
-                        <td><c:out value="${abonnements.dateDebut}" /></td>
-                        <td><c:out value="${abonnements.dateFin}" /></td>
-                        <td>
-                            <a href="<%=request.getContextPath()%>/abonnements/edit?idAbonnement=<c:out value='${abonnements.idAbonnement}' />" class="btn btn-sm btn-warning">
-                                <i class="bi bi-pencil-fill"></i> Modifier
-                            </a>
-                            &nbsp;
-                            <a href="<%=request.getContextPath()%>//abonnements/delete?idAbonnement=<c:out value='${abonnements.idAbonnement}' />" class="btn btn-sm btn-danger"
-                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet abonnement ?')">
-                                <i class="bi bi-trash"></i> Supprimer
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
+    <c:forEach var="abonnements" items="${listAbonnements}" varStatus="status">
+        <tr>
+            <td><c:out value="${abonnements.idAbonnement}" /></td>
+            <td>
+                <!-- Afficher le nom correspondant à l'index -->
+                <c:out value="${nomsApprenants[status.index]}" />
+            </td>
+            <td><c:out value="${abonnements.dateDebut}" /></td>
+            <td><c:out value="${abonnements.dateFin}" /></td>
+            <td>
+                <a href="<%=request.getContextPath()%>/abonnements/edit?idAbonnement=<c:out value='${abonnements.idAbonnement}' />" class="btn btn-sm btn-warning">
+                    <i class="bi bi-pencil-fill"></i> Modifier
+                </a>
+                &nbsp;
+                <a href="<%=request.getContextPath()%>/abonnements/delete?idAbonnement=<c:out value='${abonnements.idAbonnement}' />" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet abonnement ?')">
+                    <i class="bi bi-trash"></i> Supprimer
+                </a>
+            </td>
+        </tr>
+    </c:forEach>
+</tbody>
         </table>
     </div>
 </div>

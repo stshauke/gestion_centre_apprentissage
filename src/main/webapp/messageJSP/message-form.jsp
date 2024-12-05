@@ -41,9 +41,15 @@
                 <!-- Champ Nom -->
                 <fieldset class="form-group">
                     <label>Apprenant</label> 
-                    <input type="text" value="${message.idApprenant}" class="form-control" name="idApprenant" 
-                           required="required">
+                    <select class="form-control" name="idApprenant" required="required">
+                        <option value="" disabled selected>Choisissez un apprenant</option>
+                        <!-- Boucle pour afficher les apprenants dans la liste déroulante -->
+                        <c:forEach var="apprenant" items="${listApprenants}">
+                            <option value="${apprenant.idApprenant}">${apprenant.nom}</option>
+                        </c:forEach>
+                    </select>
                 </fieldset>
+
 
                 <!-- Champ LangueDispensee -->
                 <fieldset class="form-group">

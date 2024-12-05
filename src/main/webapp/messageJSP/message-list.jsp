@@ -32,33 +32,36 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Id apprenant</th>
+                    <th>Nom apprenant</th>
                     <th>Contenu</th>
                     <th>langue_cible</th>
                     <th>datePublication</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="message" items="${listMessage}">
-                    <tr>
-                        <td><c:out value="${message.idMessage}" /></td>
-                        <td><c:out value="${message.idApprenant}" /></td>
-                        <td><c:out value="${message.contenu}" /></td>
-                        <td><c:out value="${message.langueCible}" /></td>
-                        <td><c:out value="${message.datePublication}" /></td>
-                       
-                        <td>
-                            <a href="<%=request.getContextPath()%>/message/edit?idMessage=<c:out value='${message.idMessage}' />" class="btn btn-sm btn-warning">
-                                <i class="bi bi-pencil-fill"></i> Modifier
-                            </a>
-                            &nbsp;
-                            <a href="<%=request.getContextPath()%>/message/delete?idMessage=<c:out value='${message.idMessage}' />" class="btn btn-sm btn-danger"
-                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?')">
-                                <i class="bi bi-trash"></i> Supprimer
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <c:forEach var="message" items="${listMessage}" varStatus="status">
+    <tr>
+        <td><c:out value="${message.idMessage}" /></td>
+        <td>
+            <!-- Afficher le nom correspondant à l'index -->
+            <c:out value="${nomsApprenants[status.index]}" />
+        </td>
+        <td><c:out value="${message.contenu}" /></td>
+        <td><c:out value="${message.langueCible}" /></td>
+        <td><c:out value="${message.datePublication}" /></td>
+        <td>
+            <a href="<%=request.getContextPath()%>/message/edit?idMessage=<c:out value='${message.idMessage}' />" class="btn btn-sm btn-warning">
+                <i class="bi bi-pencil-fill"></i> Modifier
+            </a>
+            &nbsp;
+            <a href="<%=request.getContextPath()%>/message/delete?idMessage=<c:out value='${message.idMessage}' />" class="btn btn-sm btn-danger"
+               onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?')">
+                <i class="bi bi-trash"></i> Supprimer
+            </a>
+        </td>
+    </tr>
+</c:forEach>
+
             </tbody>
         </table>
     </div>

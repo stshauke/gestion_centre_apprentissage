@@ -9,10 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dao.AbonnementDAO;
+import com.dao.ApprenantDAO;
 import com.model.AbonnementModel;
+import com.model.ApprenantModel;
 
 @WebServlet("/abonnements/*") // Préfixe pour toutes les actions liées aux cours
 public class AbonnementServlet extends HttpServlet {
@@ -90,12 +93,27 @@ public class AbonnementServlet extends HttpServlet {
         List<AbonnementModel> listAbonnements = abonnementsDAO.selectAllAbonnements();
         request.setAttribute("listAbonnements", listAbonnements);
 
+        // Créer une liste pour stocker les noms des apprenants
+        List<String> nomsApprenants = new ArrayList<>();
+        for (AbonnementModel abonnement : listAbonnements) {
+            String nomApprenant = abonnementsDAO.getNomApprenantById(abonnement.getIdApprenant());
+            nomsApprenants.add(nomApprenant);
+        }
+
+        // Passer la liste des noms à la JSP
+        request.setAttribute("nomsApprenants", nomsApprenants);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher(LIST_JSP);
         dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	ApprenantDAO apprenantDAO = new ApprenantDAO();
+        List<ApprenantModel> listApprenants = apprenantDAO.selectAllApprenants();
+        System.out.println("Liste des apprenants: " + listApprenants);
+        request.setAttribute("listApprenants", listApprenants);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher(FORM_JSP);
         dispatcher.forward(request, response);
     }

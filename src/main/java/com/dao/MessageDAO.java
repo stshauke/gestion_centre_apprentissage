@@ -20,6 +20,7 @@ public class MessageDAO {
     private static final String SELECT_ALL_MESSAGES = "SELECT * FROM message";
     private static final String DELETE_MESSAGE_SQL = "DELETE FROM message WHERE id_message = ?;";
     private static final String UPDATE_MESSAGE_SQL = "UPDATE message SET id_apprenant = ?, contenu = ?, langue_cible = ?, date_publication = ? WHERE id_message = ?;";
+    private static final String SELECT_NOM_APPRENANT_BY_ID = "SELECT nom FROM apprenant WHERE id_apprenant = ?";
 
     public MessageDAO() {
         // Vous pouvez utiliser une configuration avancée comme un DataSource ici.
@@ -144,4 +145,21 @@ public class MessageDAO {
             }
         }
     }
+    /**
+     * Récupérer le nom d'un apprenant par son ID.
+     */
+        public String getNomApprenantById(int idApprenant) {
+            String nomApprenant = null;
+            try (Connection connection = getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_NOM_APPRENANT_BY_ID)) {
+                preparedStatement.setInt(1, idApprenant);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    nomApprenant = rs.getString("nom");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return nomApprenant != null ? nomApprenant : "Inconnu"; // Retourne "Inconnu" si l'apprenant n'est pas trouvé
+        }
 }
