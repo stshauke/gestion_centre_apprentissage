@@ -107,6 +107,7 @@ public class SalleServlet extends HttpServlet {
         int idSalle = Integer.parseInt(request.getParameter("idSalle"));
         SalleModel existingSalle = salleDAO.selectSalle(idSalle);
         request.setAttribute("salle", existingSalle);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher(FORM_JSP);
         dispatcher.forward(request, response);
     }

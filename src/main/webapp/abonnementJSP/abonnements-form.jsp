@@ -5,15 +5,13 @@
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
-        <div>
-            <a href="index.jsp" class="navbar-brand">Accueil</a>
-        </div>
         <ul class="navbar-nav">
-           <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Apprenants</a></li>
+          <li><a href="index.jsp" class="nav-link">Accueil</a></li>
+            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Apprenants</a></li>
             <li><a href="<%=request.getContextPath()%>/cours/list-cours" class="nav-link">Cours</a></li>
             <li><a href="<%=request.getContextPath()%>/salles/list-salle" class="nav-link">Salles</a></li>
-            <li><a href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
-            <li><a href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>          
+            <li><a  class="navbar-brand" href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
+            <li><a href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>         
         </ul>
     </nav>
 </header>
@@ -57,13 +55,13 @@
                 <!-- Champ Date Début -->
                 <fieldset class="form-group">
                     <label>Date Début</label> 
-                    <input type="text" value="${abonnements.dateDebut}" class="form-control" name="dateDebut" required="required">
+                    <input type="date" value="${abonnements.dateDebut}" class="form-control" name="dateDebut" required="required">
                 </fieldset>
 
                 <!-- Champ Date Fin -->
                 <fieldset class="form-group">
                     <label>Date Fin</label> 
-                    <input type="text" value="${abonnements.dateFin}" class="form-control" name="dateFin" required="required">
+                    <input type="date" value="${abonnements.dateFin}" class="form-control" name="dateFin" required="required">
                 </fieldset>
 
                 <!-- Bouton d'envoi -->
