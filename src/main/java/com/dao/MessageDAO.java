@@ -10,7 +10,7 @@ import com.model.MessageModel;
  * DAO pour les opérations CRUD sur la table 'salles'.
  */
 public class MessageDAO {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/gestion_centre_apprentissage?useSSL=false";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/gestion_centre_apprentissage";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "";
 
@@ -61,7 +61,10 @@ public class MessageDAO {
     public MessageModel selectMessage(int idMessage) {
         MessageModel message = null;
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_MESSAGE_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                 "SELECT m.*, a.nom AS nomApprenant FROM message m " +
+                 "JOIN apprenant a ON m.id_apprenant = a.id_apprenant " +
+                 "WHERE m.id_message = ?")) {
             preparedStatement.setInt(1, idMessage);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -76,6 +79,7 @@ public class MessageDAO {
         }
         return message;
     }
+
 
     /**
      * Récupérer tous les messages.

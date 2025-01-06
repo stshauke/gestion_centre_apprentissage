@@ -2,19 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="../pagesParametres/header.jsp" />
+<%
+    // Récupérer le rôle de l'utilisateur depuis la session
+    String role = (String) session.getAttribute("role");
+%>
 
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
-        <ul class="navbar-nav">
-          <li><a href="index.jsp" class="nav-link">Accueil</a></li>
-            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Apprenants</a></li>
-            <li><a href="<%=request.getContextPath()%>/cours/list-cours" class="nav-link">Cours</a></li>
-            <li><a href="<%=request.getContextPath()%>/salles/list-salle" class="nav-link">Salles</a></li>
-            <li><a  class="navbar-brand" href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
-            <li><a href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>         
-        </ul>
-    </nav>
-</header>
+        <% if (role == null) { %>
+        <script>
+            alert("Vous devez être connecté pour accéder à cette page !");
+            window.location.href = "${pageContext.request.contextPath}/login.jsp";
+        </script>
+        <% } %>
+<br>
 
 <br>
 
@@ -42,15 +41,23 @@
 
                 <!-- Champ Apprenant -->
                 <fieldset class="form-group">
-                    <label>Apprenant</label> 
-                    <select class="form-control" name="idApprenant" required="required">
-                        <option value="" disabled selected>Choisissez un apprenant</option>
-                        <!-- Boucle pour afficher les apprenants dans la liste déroulante -->
+                    <label>Apprenant</label>
+                    <select class="form-control" name="idApprenant" required="required" 
+                        <c:if test="${abonnements != null}">disabled</c:if>> 
+                        <!-- Liste des apprenants -->
                         <c:forEach var="apprenant" items="${listApprenants}">
-                            <option value="${apprenant.idApprenant}">${apprenant.nom}</option>
+                            <option value="${apprenant.idApprenant}"
+                                <c:if test="${apprenant.idApprenant == abonnements.idApprenant}">selected</c:if>> 
+                                ${apprenant.nom}
+                            </option>
                         </c:forEach>
                     </select>
+                    <c:if test="${abonnements != null}">
+                        <!-- Ajouter un champ caché pour l'apprenant, car "disabled" exclut des données POST -->
+                        <input type="hidden" name="idApprenant" value="${abonnements.idApprenant}" />
+                    </c:if>
                 </fieldset>
+
 
                 <!-- Champ Date Début -->
                 <fieldset class="form-group">
@@ -71,5 +78,6 @@
         </div>
     </div>
 </div>
+<br>
 
 <jsp:include page="../pagesParametres/footer.jsp" />

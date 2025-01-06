@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../pagesParametres/header.jsp" />
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
-        <ul class="navbar-nav">
-          <li><a href="index.jsp" class="nav-link">Accueil</a></li>
-            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Apprenants</a></li>
-            <li><a  class="navbar-brand" href="<%=request.getContextPath()%>/cours/list-cours" class="nav-link">Cours</a></li>
-            <li><a href="<%=request.getContextPath()%>/salles/list-salle" class="nav-link">Salles</a></li>
-            <li><a href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
-            <li><a href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>         
-        </ul>
-    </nav>
-</header>
+<jsp:include page="../pagesParametres/header.jsp" />
+<%
+    // Récupérer le rôle de l'utilisateur depuis la session
+    String role = (String) session.getAttribute("role");
+%>
+
+        <% if (role == null) { %>
+        <script>
+            alert("Vous devez être connecté pour accéder à cette page !");
+            window.location.href = "${pageContext.request.contextPath}/login.jsp";
+        </script>
+        <% } %>
+<br>
+
 <br>
 <div class="container col-md-5">
     <div class="card">
@@ -45,31 +46,32 @@
 
                 <!-- Champ LangueDispensee -->
                 <fieldset class="form-group">
-                    <label>Langue Dispensee</label> 
+                    <label>Langue</label> 
                     <input type="text" value="${cours.langueDispensee}" class="form-control" name="langueDispensee" 
                            required="required" pattern=".{5,}" title="Au moins 5 caractères">
                 </fieldset>
                 <!-- Champ DescriptionsCours -->
                 <fieldset class="form-group">
-                    <label>DescriptionsCours</label> 
-                    <input type="text" value="${cours.descriptionsCours}" class="form-control" name="DescriptionsCours" 
-                           required="required" pattern=".{5,}" title="Au moins 5 caractères">
+                    <label>Description</label>
+                    <textarea class="form-control" name="descriptionsCours" required="required" 
+                              pattern=".{5,}" title="Au moins 5 caractères">${cours.descriptionsCours}</textarea>
                 </fieldset>
+
                  <!-- Champ typeCours -->
                 <fieldset class="form-group">
-                    <label>Type Cours</label> 
+                    <label>Type</label> 
                     <input type="text" value="${cours.typeCours}" class="form-control" name="typeCours" 
                            required="required" pattern=".{5,}" title="Au moins 5 caractères">
                 </fieldset>
                  <!-- Champ idSalle -->
                 <fieldset class="form-group">
-                    <label>idSalle</label> 
+                    <label>Salle</label> 
                     <input type="text" value="${cours.idSalle}" class="form-control" name="idSalle" 
                            required="required">
                 </fieldset>
                 <!-- Champ tarifCours -->
                 <fieldset class="form-group">
-                    <label>tarifCours</label> 
+                    <label>Tarif</label> 
                     <input type="text" value="${cours.tarifCours}" class="form-control" name="tarifCours" 
                            required="required">
                 </fieldset>

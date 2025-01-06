@@ -120,14 +120,20 @@ public class AbonnementServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        
-    	int idAbonnement = Integer.parseInt(request.getParameter("idAbonnement"));
-    	AbonnementModel existingAbonnement = abonnementsDAO.selectAbonnement(idAbonnement);
+
+        int idAbonnement = Integer.parseInt(request.getParameter("idAbonnement"));
+        AbonnementModel existingAbonnement = abonnementsDAO.selectAbonnement(idAbonnement);
         request.setAttribute("abonnements", existingAbonnement);
+
+        // Charger tous les apprenants pour remplir la liste déroulante
+        ApprenantDAO apprenantDAO = new ApprenantDAO();
+        List<ApprenantModel> listApprenants = apprenantDAO.selectAllApprenants();
+        request.setAttribute("listApprenants", listApprenants);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(FORM_JSP);
         dispatcher.forward(request, response);
     }
+
 
     private void insertAbonnement(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {

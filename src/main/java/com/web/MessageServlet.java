@@ -92,19 +92,18 @@ public class MessageServlet extends HttpServlet {
     private void listMessage(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         List<MessageModel> listMessage = messageDAO.selectAllMessages();
-        request.setAttribute("listMessage", listMessage);
-        // Créer une liste pour stocker les noms des apprenants
         List<String> nomsApprenants = new ArrayList<>();
-        for (MessageModel message: listMessage) {
-            String nomApprenant = messageDAO.getNomApprenantById(message.getIdApprenant());
-            nomsApprenants.add(nomApprenant);
+
+        for (MessageModel message : listMessage) {
+            nomsApprenants.add(messageDAO.getNomApprenantById(message.getIdApprenant()));
         }
 
-        // Passer la liste des noms à la JSP
+        request.setAttribute("listMessage", listMessage);
         request.setAttribute("nomsApprenants", nomsApprenants);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(LIST_JSP);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/messageJSP/message-list.jsp");
         dispatcher.forward(request, response);
     }
+
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -121,28 +120,40 @@ public class MessageServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        
-    	int idMessage = Integer.parseInt(request.getParameter("idMessage"));
-    	MessageModel existingMessage = messageDAO.selectMessage(idMessage);
-        request.setAttribute("message", existingMessage);
+        int idMessage = Integer.parseInt(request.getParameter("idMessage"));
+        MessageModel existingMessage = messageDAO.selectMessage(idMessage);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(FORM_JSP);
+        // Récupérer tous les apprenants
+        ApprenantDAO apprenantDAO = new ApprenantDAO();
+        List<ApprenantModel> listApprenants = apprenantDAO.selectAllApprenants();
+
+        // Obtenir le nom de l'apprenant basé sur idApprenant du message
+        String nomApprenant = apprenantDAO.getNomApprenantById(existingMessage.getIdApprenant());
+
+        // Ajouter le message, apprenants et nom à la requête
+        request.setAttribute("message", existingMessage);
+        request.setAttribute("listApprenants", listApprenants);
+        request.setAttribute("nomApprenant", nomApprenant);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/messageJSP/message-form.jsp");
         dispatcher.forward(request, response);
     }
 
+
+
     private void insertMessage(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {    	
-    	
-    	int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
+            throws SQLException, IOException {
+        int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
         String contenu = request.getParameter("contenu");
         String langueCible = request.getParameter("langueCible");
-        String datePublication =request.getParameter("datePublication");
-        
-        MessageModel newMessage = new MessageModel( idApprenant, contenu, langueCible, datePublication);
+        String datePublication = request.getParameter("datePublication");
+
+        MessageModel newMessage = new MessageModel(idApprenant, contenu, langueCible, datePublication);
         messageDAO.insertMessage(newMessage);
 
         response.sendRedirect("list-message");
     }
+
 
     private void updateMessage(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {

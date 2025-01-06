@@ -3,25 +3,24 @@
 
 <jsp:include page="../pagesParametres/header.jsp" />
 
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
-        <ul class="navbar-nav">
-          <li><a href="index.jsp" class="nav-link">Accueil</a></li>
-            <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Apprenants</a></li>
-            <li><a href="<%=request.getContextPath()%>/cours/list-cours" class="nav-link">Cours</a></li>
-            <li><a href="<%=request.getContextPath()%>/salles/list-salle" class="nav-link">Salles</a></li>
-            <li><a  href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
-            <li><a class="navbar-brand" href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>         
-        </ul>
-    </nav>
-</header>
+<%
+    // Récupérer le rôle de l'utilisateur depuis la session
+    String role = (String) session.getAttribute("role");
+%>
+
+        <% if (role == null) { %>
+        <script>
+            alert("Vous devez être connecté pour accéder à cette page !");
+            window.location.href = "${pageContext.request.contextPath}/login.jsp";
+        </script>
+        <% } %>
 
 <br>
 
 <div class="container col-md-5">
     <div class="card">
         <div class="card-body">
-            <form action="${pageContext.request.contextPath}/abonnements/${message != null ? 'update' : 'insert'}" method="post">
+            <form action="${pageContext.request.contextPath}/message/${message != null ? 'update' : 'insert'}" method="post">
                 <caption>
                     <h2>
                         <c:choose>
@@ -40,43 +39,52 @@
                     <input type="hidden" name="idMessage" value="${message.idMessage}" />
                 </c:if>
 
-                <!-- Champ Apprenant -->
-                <fieldset class="form-group">
-                    <label>Apprenant</label> 
-                    <select class="form-control" name="idApprenant" required="required">
-                        <option value="" disabled selected>Choisissez un apprenant</option>
-                        <!-- Boucle pour afficher les apprenants dans la liste déroulante -->
-                        <c:forEach var="apprenant" items="${listApprenants}">
-                            <option value="${apprenant.idApprenant}">${apprenant.nom}</option>
-                        </c:forEach>
-                    </select>
-                </fieldset>
-
-                 <!-- Champ LangueDispensee -->
-                <fieldset class="form-group">
-                    <label>Contenu</label> 
-                    <input type="text" value="${message.contenu}" class="form-control" name="contenu" 
-                           required="required">
-                </fieldset>
-                <!-- Champ DescriptionsCours -->
-                <fieldset class="form-group">
-                    <label>Langue cible</label> 
-                    <input type="text" value="${message.langueCible}" class="form-control" name="langueCible" 
-                           required="required" >
-                </fieldset>
-                 <!-- Champ typeCours -->
-                <fieldset class="form-group">
-                    <label>Date de publication</label> 
-                    <input type="text" value="${message.datePublication}" class="form-control" name="datePublication" 
-                           required="required" >
-                </fieldset>
-
-                <!-- Débogage pour afficher le nombre d'apprenants -->
-                <c:if test="${not empty listApprenants}">
-                   
+                <!-- Si modification, afficher le nom de l'apprenant en lecture seule -->
+                <c:if test="${message != null}">
+                    <fieldset class="form-group">
+                        <label>Apprenant</label>
+                        <!-- Lecture seule pour le nom -->
+                        <input type="text" class="form-control" value="${nomApprenant}" readonly>
+                        <!-- Stocker l'idApprenant dans un champ caché -->
+                        <input type="hidden" name="idApprenant" value="${message.idApprenant}">
+                    </fieldset>
                 </c:if>
- <!-- Bouton d'envoi -->
+
+                <!-- Si ajout, afficher une liste déroulante -->
+                <c:if test="${message == null}">
+                    <fieldset class="form-group">
+                        <label>Apprenant</label>
+                        <select class="form-control" name="idApprenant" required="required">
+                            <option value="" disabled selected>Choisissez un apprenant</option>
+                            <c:forEach var="apprenant" items="${listApprenants}">
+                                <option value="${apprenant.idApprenant}">${apprenant.nom}</option>
+                            </c:forEach>
+                        </select>
+                    </fieldset>
+                </c:if>
+
+
+
+                <!-- Champ Contenu -->
+                <fieldset class="form-group">
+                    <label>Contenu</label>
+                    <input type="text" value="${message.contenu}" class="form-control" name="contenu" required="required">
+                </fieldset>
+
+                <!-- Champ Langue cible -->
+                <fieldset class="form-group">
+                    <label>Langue cible</label>
+                    <input type="text" value="${message.langueCible}" class="form-control" name="langueCible" required="required">
+                </fieldset>
+
+                <!-- Champ Date Publication -->
+                <fieldset class="form-group">
+                    <label>Date de publication</label>
+                    <input type="date" value="${message.datePublication}" class="form-control" name="datePublication" required="required">
+                </fieldset>
+
                 <button type="submit" class="btn btn-success">Enregistrer</button>
+
             </form>
 
         </div>

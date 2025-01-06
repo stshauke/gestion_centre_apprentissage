@@ -10,7 +10,7 @@ import com.model.AbonnementModel;
  * DAO pour les opérations CRUD sur la table 'abonnements'.
  */
 public class AbonnementDAO {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/gestion_centre_apprentissage?useSSL=false";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/gestion_centre_apprentissage";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "";
 

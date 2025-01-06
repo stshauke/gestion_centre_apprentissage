@@ -16,7 +16,7 @@ import com.model.ApprenantModel;
  * 'apprenant' table in the database.
  */
 public class ApprenantDAO {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/gestion_centre_apprentissage?useSSL=false";
+    private String jdbcURL = "jdbc:mysql://localhost:3306/gestion_centre_apprentissage";
     private String jdbcUsername = "root";
     private String jdbcPassword = "";
 
@@ -127,4 +127,41 @@ public class ApprenantDAO {
             }
         }
     }
+    public boolean addApprenant(int userId, String name, String languageLevel, String targetLanguage) {
+        String sql = "INSERT INTO apprenant (id_user, nom, niveau_langue, langue_cible) VALUES (?, ?, ?, ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            stmt.setString(2, name);
+            stmt.setString(3, languageLevel);
+            stmt.setString(4, targetLanguage);
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public String getNomApprenantById(int idApprenant) {
+        String nomApprenant = null;
+        String sql = "SELECT nom FROM apprenant WHERE id_apprenant = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, idApprenant);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                nomApprenant = rs.getString("nom");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nomApprenant != null ? nomApprenant : "Inconnu"; // Retourne "Inconnu" si pas trouvé
+    }
+
 }

@@ -1,76 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-
-
-<jsp:include page="../pagesParametres/header.jsp" />
-
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<jsp:include page="../pagesParametres/header.jsp" />
+<%
+    // Récupérer le rôle de l'utilisateur depuis la session
+    String role = (String) session.getAttribute("role");
+%>
 
+<% if (role == null) { %>
+<script>
+    alert("Vous devez être connecté pour accéder à cette page !");
+    window.location.href = "${pageContext.request.contextPath}/login.jsp";
+</script>
+<% } %>
 
+<body style="background-color: #fffceb; font-family: Arial, sans-serif;">
+    <div class="container mt-4">
+        <h3 class="text-center text-dark my-4">Liste des Apprenants</h3>
+        <hr>
 
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
-        <ul class="navbar-nav">
-          <li><a href="index.jsp" class="nav-link">Accueil</a></li>
-            <li><a class="navbar-brand"href="<%=request.getContextPath()%>/list" class="nav-link">Apprenants</a></li>
-            <li><a href="<%=request.getContextPath()%>/cours/list-cours" class="nav-link">Cours</a></li>
-            <li><a href="<%=request.getContextPath()%>/salles/list-salle" class="nav-link">Salles</a></li>
-            <li><a href="<%=request.getContextPath()%>/abonnements/list-abonnements" class="nav-link">Abonnements</a></li>
-            <li><a href="<%=request.getContextPath()%>/message/list-message" class="nav-link">Message</a></li>         
-        </ul>
-    </nav>
-    </header>
-    <br>
+        <!-- <div class="container text-left mb-4">
+            <a href="<%=request.getContextPath()%>/apprenant/new" 
+               class="btn btn-lg" 
+               style="background-color: #fd7e14; color: white; border-radius: 30px; font-weight: bold;">
+                <i class="bi bi-plus-circle"></i> Ajouter un Apprenant
+            </a>
+        </div> -->
 
-    <div class="row">
-        <div class="container">
-            <h3 class="text-center">Liste des Apprenants</h3>
-            <hr>
-            <div class="container text-left">
-                <a href="<%=request.getContextPath()%>/new" class="btn btn-success">Ajouter un Apprenant</a>
-            </div>
-            <br>
-            <table class="table table-bordered">
-                <thead>
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 10px;">
+            <table class="table table-striped table-hover" style="overflow: hidden; border-collapse: separate; border-spacing: 0;">
+                <thead style="background-color: #FFE4B5; border: none;">
                     <tr>
                         <th>ID</th>
                         <th>Nom</th>
-                        <th>niveauLangue</th>
-                        <th>langueCible</th>
+                        <th>Niveau Langue</th>
+                        <th>Langue Cible</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="apprenant" items="${listApprenants}">
-					    <tr>
-					        <td>
-					            <c:out value="${apprenant.idApprenant}" />
-					        </td>
-					        <td>
-					            <c:out value="${apprenant.nom}" />
-					        </td>
-					        <td>
-					            <c:out value="${apprenant.niveauLangue}" />
-					        </td>
-					        <td>
-					            <c:out value="${apprenant.langueCible}" />
-					        </td>
-					        <td>
-    <a href="edit?idApprenant=<c:out value='${apprenant.idApprenant}' />" class="btn btn-sm btn-warning">
-        <i class="bi bi-pencil-fill"></i> Modifier
-    </a>
-    &nbsp;
-    <a href="delete?idApprenant=<c:out value='${apprenant.idApprenant}' />" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet apprenant ?')">
-        <i class="bi bi-trash"></i> Supprimer
-    </a>
-</td>
-
-					    </tr>
-					</c:forEach>
-
+                        <tr style="background-color: #F9F9F9; border-bottom: 1px solid rgba(169, 169, 169, 0.8);">
+                            <td><c:out value="${apprenant.idApprenant}" /></td>
+                            <td><c:out value="${apprenant.nom}" /></td>
+                            <td><c:out value="${apprenant.niveauLangue}" /></td>
+                            <td><c:out value="${apprenant.langueCible}" /></td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/edit?idApprenant=${apprenant.idApprenant}" 
+                                   class="btn btn-sm" 
+                                   style="background-color: #FF8C00; color: white; border-radius: 25px;">
+                                    <i class="bi bi-pencil-fill"></i> Modifier
+                                </a>
+                                &nbsp;
+                                <a href="<%=request.getContextPath()%>/apprenant/delete?idApprenant=<c:out value='${apprenant.idApprenant}' />" 
+                                   class="btn btn-sm" 
+                                   style="background-color: #FF6347; color: white; border-radius: 25px;" 
+                                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet apprenant ?')">
+                                    <i class="bi bi-trash"></i> Supprimer
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
-<jsp:include page="../pagesParametres/footer.jsp" />
 
+    <jsp:include page="../pagesParametres/footer.jsp" />
+</body>
