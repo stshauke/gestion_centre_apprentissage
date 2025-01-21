@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>gestion_centre_apprentissage</display-name>
-	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
-		<!-- <welcome-file>index.htm</welcome-file>
-		<welcome-file>login.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>-->
-	</welcome-file-list>
-	<servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>/assets/*</url-pattern>
-</servlet-mapping>
+    <display-name>gestion_centre_apprentissage</display-name>
+
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Déclaration de la servlet AchatServlet -->
+    <servlet>
+        <servlet-name>AchatServlet</servlet-name>
+        <servlet-class>com.web.AchatServlet</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>FactureServlet</display-name>
+    	<servlet-name>FactureServlet</servlet-name>
+    	<servlet-class>com.web.FactureServlet</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>DownloadInvoiceServlet</display-name>
+    	<servlet-name>DownloadInvoiceServlet</servlet-name>
+    	<servlet-class>com.web.DownloadInvoiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>FacturesListServlet</display-name>
+    	<servlet-name>FacturesListServlet</servlet-name>
+    	<servlet-class>com.web.FacturesListServlet</servlet-class>
+    </servlet>
+
+    <!-- Mapping de la servlet AchatServlet pour une URL spécifique -->
+    <servlet-mapping>
+        <servlet-name>AchatServlet</servlet-name>
+        <url-pattern>/AchatServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>FactureServlet</servlet-name>
+    	<url-pattern>/FactureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>DownloadInvoiceServlet</servlet-name>
+    	<url-pattern>/DownloadInvoiceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>FacturesListServlet</servlet-name>
+    	<url-pattern>/FacturesListServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

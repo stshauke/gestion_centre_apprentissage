@@ -1,35 +1,39 @@
 package com.model;
 
-/**
- * AbonnementsModel.java
- * This is a model class representing an Abonnement entity.
- * Corresponds to the 'abonnements' table in the database.
- */
-public class AbonnementModel {
-    protected int idAbonnement;
-    protected int idApprenant;
-    protected String dateDebut;
-    protected String dateFin;
 
-    // Default constructor
+
+public class AbonnementModel {
+    private int idAbonnement;  // ID unique pour l'abonnement
+    private String nom;        // Nom de l'abonnement
+    private String description; // Description de l'abonnement
+    private double prix;   // Prix de l'abonnement (utilisation de BigDecimal pour plus de précision)
+    private int duree;         // Durée de l'abonnement
+    private String uniteDuree; // Unité de durée (jour, mois, an)
+
+    // Constructeur sans arguments
     public AbonnementModel() {}
 
-    // Constructor without ID (useful for insertion)
-    public AbonnementModel(int idApprenant, String dateDebut, String dateFin) {
-        this.idApprenant = idApprenant;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
+    // Constructeur avec les paramètres nécessaires
+    public AbonnementModel(String nom, String description, double prix, int duree, String uniteDuree) {
+        this.nom = nom;
+        this.description = description;
+        this.prix = prix;
+        this.duree = duree;
+        this.uniteDuree = uniteDuree;
     }
 
-    // Constructor with ID (useful for updates or queries)
-    public AbonnementModel(int idAbonnement, int idApprenant, String dateDebut, String dateFin) {
+    // Constructeur avec tous les paramètres, y compris l'ID d'abonnement
+    public AbonnementModel(int idAbonnement, String nom, String description, double prix, int duree, String uniteDuree) {
         this.idAbonnement = idAbonnement;
-        this.idApprenant = idApprenant;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
+        this.nom = nom;
+        this.description = description;
+        this.prix = prix;
+        this.duree = duree;
+        this.uniteDuree = uniteDuree;
     }
 
-    // Getters and setters
+    // Getters et setters pour tous les attributs
+
     public int getIdAbonnement() {
         return idAbonnement;
     }
@@ -38,35 +42,43 @@ public class AbonnementModel {
         this.idAbonnement = idAbonnement;
     }
 
-    public int getIdApprenant() {
-        return idApprenant;
+    public String getNom() {
+        return nom;
     }
 
-    public void setIdApprenant(int idApprenant) {
-        this.idApprenant = idApprenant;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public String getDateDebut() {
-        return dateDebut;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDateDebut(String dateDebut) {
-        this.dateDebut = dateDebut;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getDateFin() {
-        return dateFin;
+    public double getPrix() {
+        return prix;
     }
 
-    public void setDateFin(String dateFin) {
-        this.dateFin = dateFin;
+    public void setPrix(double prix) {
+        this.prix = prix;
     }
 
-    @Override
-    public String toString() {
-        return "AbonnementModel [idAbonnement=" + idAbonnement + 
-                ", idApprenant=" + idApprenant + 
-                ", dateDebut=" + dateDebut + 
-                ", dateFin=" + dateFin + "]";
+    public int getDuree() {
+        return duree;
+    }
+
+    public void setDuree(int duree) {
+        this.duree = duree;
+    }
+
+    public String getUniteDuree() {
+        return uniteDuree;
+    }
+
+    public void setUniteDuree(String uniteDuree) {
+        this.uniteDuree = uniteDuree;
     }
 }

@@ -66,6 +66,9 @@
         <% } else if ("apprenant".equals(role)) { %>
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cours/list-cours">Cours</a></li>
             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/message/list-message">Messages</a></li>
+             <li class="nav-item"><a  class="nav-link"  href="${pageContext.request.contextPath}/abonnements/list-abonnements">Acheter Abonnement</a></li>
+             <li class="nav-item"><a  class="nav-link"  href="${pageContext.request.contextPath}/factures-list">Mes factures</a></li>
+             
         <% } %>
         <li class="nav-item">
           <a class="nav-link text-warning fw-bold" href="${pageContext.request.contextPath}/logout">Déconnexion</a>

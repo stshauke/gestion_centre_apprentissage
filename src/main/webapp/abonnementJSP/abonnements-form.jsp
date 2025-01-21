@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <jsp:include page="../pagesParametres/header.jsp" />
 <%
@@ -7,76 +7,92 @@
     String role = (String) session.getAttribute("role");
 %>
 
-        <% if (role == null) { %>
-        <script>
-            alert("Vous devez être connecté pour accéder à cette page !");
-            window.location.href = "${pageContext.request.contextPath}/login.jsp";
-        </script>
-        <% } %>
-<br>
+<% if (role == null) { %>
+<script>
+    alert("Vous devez être connecté pour accéder à cette page !");
+    window.location.href = "${pageContext.request.contextPath}/login.jsp";
+</script>
+<% } %>
 
-<br>
+<br><br>
 
 <div class="container col-md-5">
     <div class="card">
         <div class="card-body">
-            <form action="${pageContext.request.contextPath}/abonnements/${abonnements != null ? 'update' : 'insert'}" method="post">
-                <caption>
-                    <h2>
-                        <c:choose>
-                            <c:when test="${abonnements != null}">
-                                Modifier un abonnement
-                            </c:when>
-                            <c:otherwise>
-                                Ajouter un abonnement
-                            </c:otherwise>
-                        </c:choose>
-                    </h2>
-                </caption>
+            <!-- Vérification si un abonnement est passé en paramètre pour la modification -->
+            <form action="${pageContext.request.contextPath}/abonnements/${abonnement != null ? 'update' : 'insert'}" method="post">
+                <h2 class="text-center">
+                    <c:choose>
+                        <c:when test="${abonnement != null}">
+                            Modifier un abonnement
+                        </c:when>
+                        <c:otherwise>
+                            Ajouter un abonnement
+                        </c:otherwise>
+                    </c:choose>
+                </h2>
+                <hr>
 
                 <!-- Champ caché pour l'ID de l'abonnement (si modification) -->
-                <c:if test="${abonnements != null}">
-                    <input type="hidden" name="idAbonnement" value="${abonnements.idAbonnement}" />
+                <c:if test="${abonnement != null}">
+                    <input type="hidden" name="idAbonnement" value="${abonnement.idAbonnement}" />
                 </c:if>
 
-                <!-- Champ Apprenant -->
+                <!-- Champ Nom de l'abonnement -->
                 <fieldset class="form-group">
-                    <label>Apprenant</label>
-                    <select class="form-control" name="idApprenant" required="required" 
-                        <c:if test="${abonnements != null}">disabled</c:if>> 
-                        <!-- Liste des apprenants -->
-                        <c:forEach var="apprenant" items="${listApprenants}">
-                            <option value="${apprenant.idApprenant}"
-                                <c:if test="${apprenant.idApprenant == abonnements.idApprenant}">selected</c:if>> 
-                                ${apprenant.nom}
-                            </option>
+                    <label>Nom</label>
+                    <input type="text" class="form-control" name="nom" value="${abonnement != null ? abonnement.nom : ''}" required="required">
+                </fieldset>
+
+                <!-- Champ Description -->
+                <fieldset class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" name="description" required="required">${abonnement != null ? abonnement.description : ''}</textarea>
+                </fieldset>
+
+                <!-- Champ Prix -->
+                <fieldset class="form-group">
+                    <label>Prix</label>
+                    <input type="number" step="0.01" class="form-control" name="prix" value="${abonnement != null ? abonnement.prix : ''}" required="required">
+                </fieldset>
+
+                <!-- Champ Durée -->
+                <fieldset class="form-group">
+                    <label>Durée</label>
+                    <input type="number" class="form-control" name="duree" value="${abonnement != null ? abonnement.duree : ''}" required="required">
+                </fieldset>
+
+                <!-- Champ Unité de durée -->
+                <fieldset class="form-group">
+                    <label>Unité de durée</label>
+                    <select class="form-control" name="uniteDuree" required="required">
+                        <c:forEach var="option" items="${uniteDureeOptions}">
+                            <option value="${option}" <c:if test="${abonnement != null && abonnement.uniteDuree == option}">selected</c:if>>${option}</option>
                         </c:forEach>
                     </select>
-                    <c:if test="${abonnements != null}">
-                        <!-- Ajouter un champ caché pour l'apprenant, car "disabled" exclut des données POST -->
-                        <input type="hidden" name="idApprenant" value="${abonnements.idApprenant}" />
-                    </c:if>
-                </fieldset>
-
-                <!-- Champ Date Début -->
-                <fieldset class="form-group">
-                    <label>Date Début</label> 
-                    <input type="date" value="${abonnements.dateDebut}" class="form-control" name="dateDebut" required="required">
-                </fieldset>
-
-                <!-- Champ Date Fin -->
-                <fieldset class="form-group">
-                    <label>Date Fin</label> 
-                    <input type="date" value="${abonnements.dateFin}" class="form-control" name="dateFin" required="required">
                 </fieldset>
 
                 <!-- Bouton d'envoi -->
-                <button type="submit" class="btn btn-success">Enregistrer</button>
-            </form>
+                <button type="submit" class="btn btn-success">
+                    <c:choose>
+                        <c:when test="${abonnement != null}">
+                            Enregistrer les modifications
+                        </c:when>
+                        <c:otherwise>
+                            Ajouter l'abonnement
+                        </c:otherwise>
+                    </c:choose>
+                </button>
 
+                <!-- Bouton pour réinitialiser le formulaire (si ajout) -->
+                <c:if test="${abonnement == null}">
+                    <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+                </c:if>
+            </form>
         </div>
     </div>
 </div>
+
 <br>
 
 <jsp:include page="../pagesParametres/footer.jsp" />

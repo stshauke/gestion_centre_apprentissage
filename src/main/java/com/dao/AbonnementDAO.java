@@ -1,29 +1,27 @@
 package com.dao;
 
+import com.model.AbonnementModel;
+
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.model.AbonnementModel;
-
-/**
- * DAO pour les opérations CRUD sur la table 'abonnements'.
- */
 public class AbonnementDAO {
+    // Informations de connexion à la base de données
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/gestion_centre_apprentissage";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "";
 
     // Requêtes SQL
-    private static final String INSERT_ABONNEMENT_SQL = "INSERT INTO abonnements (id_apprenant, date_debut, date_fin) VALUES (?, ?, ?);";
+    private static final String INSERT_ABONNEMENT_SQL = "INSERT INTO abonnements (nom, description, prix, duree, unite_duree) VALUES (?, ?, ?, ?, ?)";
     private static final String SELECT_ABONNEMENT_BY_ID = "SELECT * FROM abonnements WHERE id_abonnement = ?";
     private static final String SELECT_ALL_ABONNEMENTS = "SELECT * FROM abonnements";
-    private static final String DELETE_ABONNEMENT_SQL = "DELETE FROM abonnements WHERE id_abonnement = ?;";
-    private static final String UPDATE_ABONNEMENT_SQL = "UPDATE abonnements SET id_apprenant = ?, date_debut = ?, date_fin = ? WHERE id_abonnement = ?;";
-    private static final String SELECT_NOM_APPRENANT_BY_ID = "SELECT nom FROM apprenant WHERE id_apprenant = ?";
-    
+    private static final String DELETE_ABONNEMENT_SQL = "DELETE FROM abonnements WHERE id_abonnement = ?";
+    private static final String UPDATE_ABONNEMENT_SQL = "UPDATE abonnements SET nom = ?, description = ?, prix = ?, duree = ?, unite_duree = ? WHERE id_abonnement = ?";
+
     public AbonnementDAO() {
-        // Configuration avancée possible (DataSource, etc.)
+        // Constructeur par défaut
     }
 
     /**
@@ -46,9 +44,11 @@ public class AbonnementDAO {
     public void insertAbonnement(AbonnementModel abonnement) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ABONNEMENT_SQL)) {
-            preparedStatement.setInt(1, abonnement.getIdApprenant());
-            preparedStatement.setString(2, abonnement.getDateDebut());
-            preparedStatement.setString(3, abonnement.getDateFin());
+            preparedStatement.setString(1, abonnement.getNom());
+            preparedStatement.setString(2, abonnement.getDescription());
+            preparedStatement.setDouble(3, abonnement.getPrix());
+            preparedStatement.setInt(4, abonnement.getDuree());
+            preparedStatement.setString(5, abonnement.getUniteDuree());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
@@ -65,10 +65,12 @@ public class AbonnementDAO {
             preparedStatement.setInt(1, idAbonnement);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                int idApprenant = rs.getInt("id_apprenant");
-                String dateDebut = rs.getString("date_debut");
-                String dateFin = rs.getString("date_fin");
-                abonnement = new AbonnementModel(idAbonnement, idApprenant, dateDebut, dateFin);
+                String nom = rs.getString("nom");
+                String description = rs.getString("description");
+                double prix = rs.getDouble("prix");
+                int duree = rs.getInt("duree");
+                String uniteDuree = rs.getString("unite_duree");
+                abonnement = new AbonnementModel(idAbonnement, nom, description, prix, duree, uniteDuree);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -80,34 +82,23 @@ public class AbonnementDAO {
      * Récupérer tous les abonnements.
      */
     public List<AbonnementModel> selectAllAbonnements() {
-        List<AbonnementModel> abonnementsList = new ArrayList<>();
+        List<AbonnementModel> abonnements = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ABONNEMENTS)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int idAbonnement = rs.getInt("id_abonnement");
-                int idApprenant = rs.getInt("id_apprenant");
-                String dateDebut = rs.getString("date_debut");
-                String dateFin = rs.getString("date_fin");
-                abonnementsList.add(new AbonnementModel(idAbonnement, idApprenant, dateDebut, dateFin));
+                String nom = rs.getString("nom");
+                String description = rs.getString("description");
+                double prix = rs.getDouble("prix");
+                int duree = rs.getInt("duree");
+                String uniteDuree = rs.getString("unite_duree");
+                abonnements.add(new AbonnementModel(idAbonnement, nom, description, prix, duree, uniteDuree));
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
-        return abonnementsList;
-    }
-
-    /**
-     * Supprimer un abonnement par ID.
-     */
-    public boolean deleteAbonnement(int idAbonnement) throws SQLException {
-        boolean rowDeleted = false;
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_ABONNEMENT_SQL)) {
-            statement.setInt(1, idAbonnement);
-            rowDeleted = statement.executeUpdate() > 0;
-        }
-        return rowDeleted;
+        return abonnements;
     }
 
     /**
@@ -116,14 +107,29 @@ public class AbonnementDAO {
     public boolean updateAbonnement(AbonnementModel abonnement) throws SQLException {
         boolean rowUpdated = false;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_ABONNEMENT_SQL)) {
-            statement.setInt(1, abonnement.getIdApprenant());
-            statement.setString(2, abonnement.getDateDebut());
-            statement.setString(3, abonnement.getDateFin());
-            statement.setInt(4, abonnement.getIdAbonnement());
-            rowUpdated = statement.executeUpdate() > 0;
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ABONNEMENT_SQL)) {
+            preparedStatement.setString(1, abonnement.getNom());
+            preparedStatement.setString(2, abonnement.getDescription());
+            preparedStatement.setDouble(3, abonnement.getPrix());
+            preparedStatement.setInt(4, abonnement.getDuree());
+            preparedStatement.setString(5, abonnement.getUniteDuree());
+            preparedStatement.setInt(6, abonnement.getIdAbonnement());
+            rowUpdated = preparedStatement.executeUpdate() > 0;
         }
         return rowUpdated;
+    }
+
+    /**
+     * Supprimer un abonnement par ID.
+     */
+    public boolean deleteAbonnement(int idAbonnement) throws SQLException {
+        boolean rowDeleted = false;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ABONNEMENT_SQL)) {
+            preparedStatement.setInt(1, idAbonnement);
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+        }
+        return rowDeleted;
     }
 
     /**
@@ -142,23 +148,5 @@ public class AbonnementDAO {
                 }
             }
         }
-    }
-
-/**
- * Récupérer le nom d'un apprenant par son ID.
- */
-    public String getNomApprenantById(int idApprenant) {
-        String nomApprenant = null;
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_NOM_APPRENANT_BY_ID)) {
-            preparedStatement.setInt(1, idApprenant);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                nomApprenant = rs.getString("nom");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return nomApprenant != null ? nomApprenant : "Inconnu"; // Retourne "Inconnu" si l'apprenant n'est pas trouvé
     }
 }
